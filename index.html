@@ -7,8 +7,12 @@
     <style>
         :root{
             --accent:#0078ff;
+            /* إعادة ألوان واتساب */
             --whatsapp:#25D366;
-            --whatsapp-dark:#075E54;
+            --whatsapp-alt:#128C7E;
+            --secondary-blue:#003366; 
+            /* اللون الأحمر */
+            --red-color: #CC0000; 
         }
         body {
             font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', sans-serif;
@@ -41,23 +45,52 @@
             font-size: 32px;
             letter-spacing: 1px;
         }
+        /* لون وحجم خط العنوان "طرق الشحن" */
         h3 {
-            color: #333;
+            color: var(--secondary-blue); 
             border-bottom: 2px solid var(--accent);
             padding-bottom: 5px;
             margin-top: 30px;
             display: block;
+            font-size: 22px; 
         }
-        p, li {
+        p {
             color: #444;
             line-height: 1.7;
             font-size: 16px;
         }
-        ul { text-align: right; margin: 15px 0; padding-inline-start: 20px; }
+        
+        /* تجميد تنسيق القوائم لعمل التوسيط */
+        ul { 
+            text-align: center; 
+            list-style-type: none; 
+            list-style-position: inside; 
+            margin: 15px 0; 
+            padding-inline-start: 0; 
+        }
+        
+        li {
+             list-style-type: none; 
+             font-size: 16px;
+             line-height: 1.7;
+        }
+
+        /* لون وحجم خط قائمة طرق الشحن إلى الأحمر */
+        .card ul:first-of-type {
+            padding: 0; 
+        }
+        .card ul:first-of-type li {
+            color: var(--red-color); 
+            font-size: 18px;
+            font-weight: 700;
+            list-style-type: none; 
+        }
 
         /* زر عام */
         .btn {
-            display: block;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; /* تم التعديل هنا للتوسيط الأفقي */
             color: #fff;
             padding: 12px;
             margin: 12px 0;
@@ -68,11 +101,18 @@
         }
         .btn:hover{ opacity: 0.96; }
 
-        /* ألوان محددة للأزرار */
-        .btn-whatsapp { background: var(--whatsapp); }
-        .btn-whatsapp-alt { background: #128C7E; }
-        .btn-whatsapp-dark { background: var(--whatsapp-dark); }
+        /* ألوان محددة للأزرار للواتساب */
+        .btn-whatsapp { background: var(--whatsapp); } 
+        .btn-whatsapp-alt { background: var(--whatsapp-alt); } 
         .btn-facebook { background: #1877F2; }
+
+        /* تنسيق صور الأزرار وزيادة حجمها */
+        .btn img {
+            width: 36px; 
+            height: 36px; 
+            margin-right: 10px; /* تم تعديل الهامش ليكون على يمين اللوجو (يسار النص) */
+            margin-left: 0;
+        }
 
         .prices {
             background: #fafafa;
@@ -83,6 +123,33 @@
             text-align: right;
         }
         .prices h3 { margin-top: 0; border-bottom: none; color: var(--accent); }
+
+        /* تلوين نصوص الأسعار إلى الأحمر */
+        .prices ul li {
+            color: var(--red-color); 
+            font-size: 18px; 
+            font-weight: bold;
+            text-align: right; 
+            list-style-type: disc; 
+        }
+        /* تنسيق النقاط الافتراضية لقوائم الأسعار لتكون داخلية */
+        .prices ul {
+             text-align: right;
+             list-style-position: inside;
+        }
+
+        .prices p {
+            color: #444; 
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .prices p strong {
+            color: #444; 
+            font-size: 20px; 
+            display: block;
+            margin-top: 10px;
+        }
+
 
         /* تحسين للاستجابة */
         @media (max-width:420px){
@@ -100,9 +167,10 @@
 
         <h1>Mr.4747</h1>
 
-        <p>موزع معتمد لشحن الجولد 24 ساعة 7 أيام</p>
+        <p style="color: var(--secondary-blue); font-size: 18px; font-weight: 700;">موزع معتمد لشحن الجولد 24 ساعة 7 أيام</p>
 
         <h3>طرق الشحن:</h3>
+        
         <ul>
             <li>كروت فودافون</li>
             <li>إنستا باي</li>
@@ -111,10 +179,18 @@
             <li>تحويل رصيد</li>
         </ul>
 
-        <!-- ملاحظة: استخدمت rel="noopener noreferrer" لأمان الروابط الخارجية -->
-        <a class="btn btn-whatsapp" href="https://wa.me/201097625788" target="_blank" rel="noopener noreferrer">💬 واتساب الأساسي: 01097625788</a>
-        <a class="btn btn-whatsapp-alt" href="https://wa.me/201095493508" target="_blank" rel="noopener noreferrer">💬 واتساب البديل: 01095493508</a>
-        <a class="btn btn-facebook" href="https://www.facebook.com/Conquer.4747/" target="_blank" rel="noopener noreferrer">📘 صفحتنا على فيسبوك</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/201097625788" target="_blank" rel="noopener noreferrer">
+            واتساب الأساسي: 01097625788
+            <img src="https://i.ibb.co/5x29nnQd/pngegg.png" alt="WhatsApp Logo">
+        </a>
+        <a class="btn btn-whatsapp-alt" href="https://wa.me/201095493508" target="_blank" rel="noopener noreferrer">
+            واتساب البديل: 01095493508
+            <img src="https://i.ibb.co/5x29nnQd/pngegg.png" alt="WhatsApp Logo">
+        </a>
+        <a class="btn btn-facebook" href="https://www.facebook.com/Conquer.4747/" target="_blank" rel="noopener noreferrer">
+            صفحتنا على فيسبوك
+            <img src="https://i.ibb.co/C5JD7NZn/pngegg-1.png" alt="Facebook Logo">
+        </a>
 
         <div class="prices">
             <h3>الأسعار ❤️💕</h3>
@@ -148,4 +224,3 @@
 
 </body>
 </html>
-
