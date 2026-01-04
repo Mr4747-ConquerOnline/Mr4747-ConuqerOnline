@@ -249,6 +249,158 @@
       .logo-wrap{ width: 120px; height: 120px; }
       .btn{ font-size: 16px; }
     }
+
+    /* =========================
+       زر الحاسبات الثابت (Mobile Friendly)
+       ========================= */
+    .calc-fab{
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 14px;
+      z-index: 9999;
+      display:flex;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .calc-fab button{
+      pointer-events:auto;
+      width: min(520px, 100%);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(90deg, rgba(247,211,106,0.95), rgba(217,164,65,0.95));
+      color:#121212;
+      font-weight: 900;
+      padding: 14px 16px;
+      border-radius: 16px;
+      cursor:pointer;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+      font-size: 16px;
+    }
+
+    /* =========================
+       نافذة الحاسبات (Modal)
+       ========================= */
+    .modal-backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display:none;
+      align-items: flex-end; /* تبان زي Bottom Sheet على الموبايل */
+      justify-content:center;
+      padding: 14px;
+    }
+    .modal-backdrop.show{ display:flex; }
+
+    .modal-sheet{
+      width: min(720px, 100%);
+      max-height: 88vh;
+      overflow:auto;
+      border-radius: 18px;
+      border: 1px solid rgba(217,164,65,0.22);
+      background:
+        radial-gradient(900px 300px at 50% 0%, rgba(247,211,106,0.10), transparent 55%),
+        linear-gradient(180deg, rgba(15,22,32,0.96), rgba(11,15,20,0.98));
+      box-shadow: 0 22px 60px rgba(0,0,0,0.6);
+      padding: 14px;
+    }
+
+    .modal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 8px 10px 12px;
+    }
+    .modal-title{
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--gold-1), var(--gold-2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-size: 18px;
+    }
+    .modal-close{
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight: 800;
+    }
+
+    /* =========================
+       ستايل الحاسبات (داخل المودال)
+       ========================= */
+    .calculator-box{
+      background: linear-gradient(180deg, rgba(10,14,20,0.65), rgba(7,9,12,0.70));
+      border:1px solid rgba(247,211,106,.18);
+      border-radius:18px;
+      padding:18px;
+      margin:12px 0;
+    }
+    .calculator-box h3{
+      margin:0 0 12px;
+      color: var(--gold-1);
+      text-align:center;
+      font-size:18px;
+    }
+    .calc-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media(max-width:560px){
+      .calc-grid{ grid-template-columns: 1fr; }
+    }
+    .calc-row{ text-align:right; }
+    .calc-row label{
+      display:block;
+      margin-bottom:6px;
+      color: var(--muted);
+      font-weight:700;
+      font-size:14px;
+    }
+    .calc-row input{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.10);
+      outline:none;
+      font-size:16px;
+      background:#fff;
+      color:#111;
+    }
+    .calc-note{
+      margin-top:10px;
+      text-align:center;
+      color:#9fb0c5;
+      font libraries: 13px; /* تصحيح: سيتم تجاهلها لو المتصفح رفضها */
+      font-size:13px;
+    }
+    .calc-actions{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+    .calc-actions button{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(247,211,106,.12);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:800;
+    }
+
+    /* مساحة تحت عشان زر الحاسبات ما يغطيش آخر المحتوى */
+    .page-bottom-space{
+      height: 84px;
+    }
   </style>
 </head>
 
@@ -330,5 +482,154 @@
     </div>
 
   </div>
+
+  <!-- مساحة لتفادي تغطية الزر الثابت -->
+  <div class="page-bottom-space"></div>
+
+  <!-- زر ثابت لفتح الحاسبات -->
+  <div class="calc-fab">
+    <button type="button" id="openCalcsBtn">فتح الحاسبات</button>
+  </div>
+
+  <!-- نافذة الحاسبات -->
+  <div class="modal-backdrop" id="calcsModal" aria-hidden="true">
+    <div class="modal-sheet" role="dialog" aria-modal="true" aria-label="حاسبات Mr.4747">
+      <div class="modal-head">
+        <div class="modal-title">حاسبات Mr.4747</div>
+        <button class="modal-close" type="button" id="closeCalcsBtn">إغلاق</button>
+      </div>
+
+      <!-- الحاسبة الأولى: كاش -->
+      <div class="calculator-box">
+        <h3>( حاسبة الكاش ) جنيه ↔ مليون</h3>
+        <div class="calc-grid">
+          <div class="calc-row">
+            <label for="cashEGP">الجنيه</label>
+            <input type="number" inputmode="decimal" step="any" id="cashEGP" placeholder="اكتب الفلوس">
+          </div>
+
+          <div class="calc-row">
+            <label for="cashMIL">المليون</label>
+            <input type="number" inputmode="decimal" step="any" id="cashMIL" placeholder="اكتب كام مليون">
+          </div>
+        </div>
+        <div class="calc-note">تكتب في أي خانة → التانية تتحسب تلقائيًا (تقريب لأسفل لرقم عشري واحد)</div>
+        <div class="calc-actions">
+          <button type="button" id="clearCash">مسح الحاسبة</button>
+        </div>
+      </div>
+
+      <!-- الحاسبة الثانية: رصيد -->
+      <div class="calculator-box">
+        <h3>حاسبة الرصيد → مليون</h3>
+        <div class="calc-grid">
+          <div class="calc-row">
+            <label for="balInput">الرصيد</label>
+            <input type="number" inputmode="decimal" step="any" id="balInput" placeholder="اكتب الرصيد الصافي">
+          </div>
+
+          <div class="calc-row">
+            <label for="balMIL">الناتج (مليون)</label>
+            <input type="number" inputmode="decimal" step="any" id="balMIL" readonly placeholder="الملايين هتظهر تلقائيًا">
+          </div>
+        </div>
+        <div class="calc-note">المعادلة: (الرصيد ÷ 7) × 3.4 (تقريب لأسفل لرقم عشري واحد)</div>
+        <div class="calc-actions">
+          <button type="button" id="clearBal">مسح الحاسبة</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ====== إعدادات الحاسبات ======
+    const RATE = 2.65;
+
+    // تقريب لأسفل (رقم عشري واحد)
+    function floor1(n){
+      return Math.floor(n * 10) / 10;
+    }
+
+    // ====== عناصر المودال ======
+    const modal = document.getElementById("calcsModal");
+    const openBtn = document.getElementById("openCalcsBtn");
+    const closeBtn = document.getElementById("closeCalcsBtn");
+
+    function openModal(){
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden","false");
+      // فوكس على أول خانة
+      setTimeout(() => document.getElementById("cashEGP").focus(), 50);
+    }
+    function closeModal(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden","true");
+    }
+
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+
+    // إغلاق عند الضغط على الخلفية
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) closeModal();
+    });
+
+    // إغلاق بـ ESC
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape" && modal.classList.contains("show")) closeModal();
+    });
+
+    // ====== الحاسبة الأولى (كاش) ======
+    const cashEGP = document.getElementById("cashEGP");
+    const cashMIL = document.getElementById("cashMIL");
+    const clearCash = document.getElementById("clearCash");
+
+    let lockCash = false;
+
+    // تكتب جنيه -> مليون = جنيه ÷ 2.65
+    cashEGP.addEventListener("input", () => {
+      if(lockCash) return;
+      lockCash = true;
+
+      const egp = parseFloat(cashEGP.value);
+      cashMIL.value = (cashEGP.value === "") ? "" : floor1(egp / RATE);
+
+      lockCash = false;
+    });
+
+    // تكتب مليون -> جنيه = مليون × 2.65
+    cashMIL.addEventListener("input", () => {
+      if(lockCash) return;
+      lockCash = true;
+
+      const mil = parseFloat(cashMIL.value);
+      cashEGP.value = (cashMIL.value === "") ? "" : floor1(mil * RATE);
+
+      lockCash = false;
+    });
+
+    clearCash.addEventListener("click", () => {
+      cashEGP.value = "";
+      cashMIL.value = "";
+      cashEGP.focus();
+    });
+
+    // ====== الحاسبة الثانية (رصيد -> مليون) ======
+    const balInput = document.getElementById("balInput");
+    const balMIL = document.getElementById("balMIL");
+    const clearBal = document.getElementById("clearBal");
+
+    balInput.addEventListener("input", () => {
+      const b = parseFloat(balInput.value);
+      balMIL.value = (balInput.value === "") ? "" : floor1((b / 7) * 3.4);
+    });
+
+    clearBal.addEventListener("click", () => {
+      balInput.value = "";
+      balMIL.value = "";
+      balInput.focus();
+    });
+  </script>
 </body>
 </html>
