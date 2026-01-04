@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حاسبة Mr.4747</title>
+  <style>
+    :root{
+      --gold:#f7d36a;
+      --text:#e8eef5;
+      --muted:#b6c2cf;
+      --border:rgba(255,255,255,0.12);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0; padding:18px;
+      font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans',sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 50% -10%, rgba(247,211,106,0.18), transparent 60%),
+        linear-gradient(rgba(5,7,10,0.92), rgba(5,7,10,0.94)),
+        url("https://i.postimg.cc/D0j5wyc9/Gemini-Generated-Image-b4c9wvb24c9wvb4c9.png");
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+    }
+    .wrap{ max-width:720px; margin:0 auto; }
+    .top{
+      text-align:center; margin-bottom:12px;
+      font-weight:900; font-size:20px;
+      background:linear-gradient(90deg,#f7d36a,#d9a441);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .box{
+      border:1px solid rgba(217,164,65,0.22);
+      background:linear-gradient(180deg, rgba(15,22,32,0.96), rgba(11,15,20,0.98));
+      border-radius:18px;
+      padding:16px;
+      box-shadow:0 22px 60px rgba(0,0,0,0.55);
+      margin:12px 0;
+    }
+    .box h3{ margin:0 0 12px; color:var(--gold); text-align:center; font-size:18px; }
+    .grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media(max-width:560px){ .grid{ grid-template-columns:1fr; } }
+    .row{ text-align:right; }
+    label{ display:block; margin:0 0 6px; color:var(--muted); font-weight:700; font-size:14px; }
+    input{
+      width:100%; padding:12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      font-size:16px; outline:none;
+      background:#fff; color:#111;
+    }
+    .note{ margin-top:10px; text-align:center; color:#9fb0c5; font-size:13px; }
+    .actions{ display:flex; justify-content:center; gap:10px; margin-top:12px; flex-wrap:wrap; }
+    button{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(247,211,106,.12);
+      color:var(--text);
+      padding:10px 14px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:900;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">حاسبة Mr.4747 السريعة</div>
+
+    <div class="box">
+      <h3>( حاسبة الكاش ) جنيه ↔ مليون</h3>
+      <div class="grid">
+        <div class="row">
+          <label for="cashEGP">الجنيه</label>
+          <input type="number" inputmode="decimal" step="any" id="cashEGP" placeholder="اكتب الفلوس">
+        </div>
+        <div class="row">
+          <label for="cashMIL">المليون</label>
+          <input type="number" inputmode="decimal" step="any" id="cashMIL" placeholder="اكتب كام مليون">
+        </div>
+      </div>
+      <div class="note">تكتب في أي خانة → التانية تتحسب تلقائيًا (تقريب لأسفل لرقم عشري واحد)</div>
+      <div class="actions">
+        <button type="button" id="clearCash">مسح</button>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>حاسبة الرصيد → مليون</h3>
+      <div class="grid">
+        <div class="row">
+          <label for="balInput">الرصيد</label>
+          <input type="number" inputmode="decimal" step="any" id="balInput" placeholder="اكتب الرصيد الصافي">
+        </div>
+        <div class="row">
+          <label for="balMIL">الناتج (مليون)</label>
+          <input type="number" inputmode="decimal" step="any" id="balMIL" readonly placeholder="الملايين هتظهر تلقائيًا">
+        </div>
+      </div>
+      <div class="note">المعادلة: (الرصيد ÷ 7) × 3.4 (تقريب لأسفل لرقم عشري واحد)</div>
+      <div class="actions">
+        <button type="button" id="clearBal">مسح</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const RATE = 2.65;
+    const floor1 = (n) => Math.floor(n * 10) / 10;
+
+    const cashEGP = document.getElementById("cashEGP");
+    const cashMIL = document.getElementById("cashMIL");
+    const clearCash = document.getElementById("clearCash");
+    let lockCash = false;
+
+    cashEGP.addEventListener("input", () => {
+      if(lockCash) return;
+      lockCash = true;
+      const egp = parseFloat(cashEGP.value);
+      cashMIL.value = (cashEGP.value === "") ? "" : floor1(egp / RATE);
+      lockCash = false;
+    });
+
+    cashMIL.addEventListener("input", () => {
+      if(lockCash) return;
+      lockCash = true;
+      const mil = parseFloat(cashMIL.value);
+      cashEGP.value = (cashMIL.value === "") ? "" : floor1(mil * RATE);
+      lockCash = false;
+    });
+
+    clearCash.addEventListener("click", () => {
+      cashEGP.value = "";
+      cashMIL.value = "";
+      cashEGP.focus();
+    });
+
+    const balInput = document.getElementById("balInput");
+    const balMIL = document.getElementById("balMIL");
+    const clearBal = document.getElementById("clearBal");
+
+    balInput.addEventListener("input", () => {
+      const b = parseFloat(balInput.value);
+      balMIL.value = (balInput.value === "") ? "" : floor1((b / 7) * 3.4);
+    });
+
+    clearBal.addEventListener("click", () => {
+      balInput.value = "";
+      balMIL.value = "";
+      balInput.focus();
+    });
+  </script>
+</body>
+</html>
