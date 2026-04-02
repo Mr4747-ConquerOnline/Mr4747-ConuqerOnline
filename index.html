@@ -454,32 +454,33 @@
     </a>
 
     <div class="prices">
-      <h3>الأسعار</h3>
+  <h3>الأسعار</h3>
 
-      <p><strong>كروت فودافون:</strong></p>
-      <ul>
-        <li>25 = 8.250 مليون</li>
-        <li>50 = 16.5 مليون</li>
-        <li>100 = 33 مليون</li>
-        <li>200 = 66 مليون</li>
-      </ul>
+  <p><strong>كروت فودافون:</strong></p>
+  <ul>
+    <li>10 = 3.250 مليون</li>
+    <li>25 = 8.125 مليون</li>
+    <li>50 = 16.250 مليون</li>
+    <li>100 = 32.5 مليون</li>
+    <li>200 = 65 مليون</li>
+  </ul>
 
-      <div class="hr"></div>
+  <div class="hr"></div>
 
-      <p><strong>أسعار كاش للمليار:</strong></p>
-      <ul>
-        <li>2700 شراء</li>
-        <li>2550 بيع</li>
-      </ul>
+  <p><strong>أسعار كاش للمليار:</strong></p>
+  <ul>
+    <li>2750 شراء</li>
+    <li>2600 بيع</li>
+  </ul>
 
-      <div class="hr"></div>
+  <div class="hr"></div>
 
-      <p><strong>الـ 100 مليون:</strong></p>
-      <ul>
-        <li>270 شراء</li>
-        <li>255 بيع</li>
-      </ul>
-    </div>
+  <p><strong>الـ 100 مليون:</strong></p>
+  <ul>
+    <li>275 شراء</li>
+    <li>260 بيع</li>
+  </ul>
+  </div>
 
   </div>
 
@@ -544,7 +545,7 @@
 
   <script>
     // ====== إعدادات الحاسبات ======
-    const RATE = 2.65;
+    const RATE = 2.75;
 
     // تقريب لأسفل (رقم عشري واحد)
     function floor1(n){
@@ -622,7 +623,7 @@
 
     balInput.addEventListener("input", () => {
       const b = parseFloat(balInput.value);
-      balMIL.value = (balInput.value === "") ? "" : floor1((b / 7) * 3.4);
+      balMIL.value = (balInput.value === "") ? "" : floor1((b / 7) * 3.250);
     });
 
     clearBal.addEventListener("click", () => {
